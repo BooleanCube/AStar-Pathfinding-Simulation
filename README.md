@@ -5,7 +5,9 @@ This is my first attempt at A* pathfinding. I made this simulation to experiment
 ![complicated-drawings](https://cloud.githubusercontent.com/assets/25334129/22450232/2b790d14-e733-11e6-8a91-4b4cba372f9b.gif)
 
 ## Basic Controls
-You must create a map to start the pathfinding. The start node is blue, end node is red and the walls are black. 
+
+### Map Creation
+You must create a map to start the pathfinding. The start node is blue, end node is red and the walls are black.
 
 To create nodes:
   - Start: hold 's' + left click
@@ -15,27 +17,37 @@ To create nodes:
 To delete nodes:
   - same as creation, except right click
 
-#### Diagonal
+### Diagonal
 My algorithm supports both diagonal and non diagonal pathfinding. <br>
 Simply check the "diagonal" box at the bottom left of the screen.
 
-#### Variable Speed
+### Variable Speed
 You may change the speed of the visualization during runtime. (By default, `speed` is 50%.) <br>
 Notice: speed only works when showSteps is true. <br>
 if `showSteps` is false, well, that leads into the next section.. 
 
-#### Show Steps or Timed Efficiency
-You may choose to view a step-by-step process of the algorithm by selecting "showSteps" box at the bottom left. 
-  - If showSteps is false, the algorithm will skip visuals until the end, and process as fast as possible.
-This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows "showSteps" as false, where it times the algorithm and outputs "Completed in 4ms" at the bottom left. 
+### Show Steps or Timed Efficiency
+You may choose to view a step-by-step process of the algorithm by selecting `showSteps` box at the bottom left. 
+  - If `showSteps` is false, the algorithm will skip visuals until the end, and process as fast as possible.
+This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows `showSteps` as false, where it times the algorithm and outputs `Completed in 4ms` at the bottom left.
 
-#### Complicated Stuff
-Those are the basics! Now you can be free to make the map as complicated as you desire. (Not really, because making the map too large will overflow the stack). But go ahead! 
-
-#### Zoom
+### Zoom
 (Temporarily removed zooming feature for now)
 
 ~~You can (kind of) zoom in and out. I wouldn't really advise it. It does not zoom into your mouse, only towards the top left corner, and making the map too big will crash the program. This needs some work. However, If you zoom in far enough you can view each nodes information. The top left is the "F cost", bottom left is "G cost" and bottom right is "H cost". I will work on properly implementing a zoom feature soon.~~
 
+## WARNING!
+
+You can create unordinary and complex maps and the simulation will run fine but be wary that sometimes, if the path has already searched many nodes, the program might eventually run into a stackoverflow error. <br>
+
+## TODO
+- [ ] Fix going through walls bug ()
+- [ ] Add a clear feature (clears every object on the screen)
+- [ ] change start and stop to start and pause and create a separate reset feature
+- [ ] while in running mode, disable editing and map creation.
+- [ ] optimize sorting
+- [ ] general optimization overall
+- [ ] bug fixing from devoncrawfords issue page
+- [ ] make a separate repo for sorting later ig /shrug
 
 *by BooleanCube :]*
