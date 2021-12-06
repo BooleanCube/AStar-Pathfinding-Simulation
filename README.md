@@ -15,24 +15,24 @@ To create nodes:
 To delete nodes:
   - same as creation, except right click
 
-### Diagonal
+#### Diagonal
 My algorithm supports both diagonal and non diagonal pathfinding. <br>
 Simply check the "diagonal" box at the bottom left of the screen.
 
-### Variable Speed
+#### Variable Speed
 You may change the speed of the visualization during runtime. (By default, `speed` is 50%.) <br>
 Notice: speed only works when showSteps is true. <br>
 if `showSteps` is false, well, that leads into the next section.. 
 
-### Show Steps or Timed Efficiency
+#### Show Steps or Timed Efficiency
 You may choose to view a step-by-step process of the algorithm by selecting "showSteps" box at the bottom left. 
   - If showSteps is false, the algorithm will skip visuals until the end, and process as fast as possible.
 This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows "showSteps" as false, where it times the algorithm and outputs "Completed in 4ms" at the bottom left. 
 
-### Complicated Stuff
+#### Complicated Stuff
 Those are the basics! Now you can be free to make the map as complicated as you desire. (Not really, because making the map too large will overflow the stack). But go ahead! 
 
-### Zoom
+#### Zoom
 (Temporarily removed zooming feature for now)
 
 ~~You can (kind of) zoom in and out. I wouldn't really advise it. It does not zoom into your mouse, only towards the top left corner, and making the map too big will crash the program. This needs some work. However, If you zoom in far enough you can view each nodes information. The top left is the "F cost", bottom left is "G cost" and bottom right is "H cost". I will work on properly implementing a zoom feature soon.~~
