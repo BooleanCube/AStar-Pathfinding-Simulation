@@ -13,14 +13,12 @@ public class APathfinding {
 
 	public APathfinding(int size) {
 		this.size = size;
-
 		diagonalMoveCost = (int) (Math.sqrt(2 * (Math.pow(size, 2))));
 		kValue = Math.PI / 2;
 		diagonal = true;
 		trig = false;
 		running = false;
 		complete = false;
-
 		borders = new ArrayList<Node>();
 		open = new ArrayList<Node>();
 		closed = new ArrayList<Node>();
