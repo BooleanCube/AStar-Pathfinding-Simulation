@@ -51,4 +51,4 @@ You can create unordinary and complex maps and the simulation will run fine but 
 - [ ] bug fixing from devoncrawfords issue page
 - [ ] make a separate repo for sorting later ig /shrug
 
-*by BooleanCube :]*
+*a project fixed by BooleanCube :]*
