@@ -42,7 +42,6 @@ This is useful for when you want to analyze the efficiency of my algorithm in di
 You can create unordinary and complex maps and the simulation will run fine but be wary that sometimes, if the path has already searched many nodes, the program might eventually run into a stackoverflow error. <br>
 
 ## TODO
-- [ ] Fix going through walls bug
 - [ ] Add a clear feature (clears every object on the screen)
 - [ ] while in running mode, disable editing and map creation.
 - [ ] optimize sorting
