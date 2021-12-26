@@ -12,9 +12,9 @@ public class ControlHandler {
 	private final Frame frame;
 	private final JLabel modeText, speedT, speedC, openT,
 	closedT, pathT, openC, closedC, pathC, noPathT;
-	private final JCheckBox showStepsCheck, diagonalCheck, trigCheck;
+	private final JCheckBox showStepsCheck, diagonalCheck;
 	private final JSlider speed;
-	private final JButton run;
+	private final JButton run, clear;
 	private final ArrayList<JLabel> labels;
 	private final ArrayList<JCheckBox> checks;
 	private final ArrayList<JSlider> sliders;
@@ -107,16 +107,8 @@ public class ControlHandler {
 		diagonalCheck.setFocusable(false);
 		diagonalCheck.setVisible(true);
 		
-		trigCheck = new JCheckBox();
-		trigCheck.setText("Trig");
-		trigCheck.setName("trigCheck");
-		trigCheck.setOpaque(false);
-		trigCheck.setFocusable(false);
-		trigCheck.setVisible(true);
-		
 		checks.add(showStepsCheck);
 		checks.add(diagonalCheck);
-		checks.add(trigCheck);
 		
 		speed = new JSlider();
 		speed.setName("speed");
@@ -139,8 +131,17 @@ public class ControlHandler {
 		run.addActionListener(frame);
 		run.setMargin(new Insets(0,0,0,0));
 		run.setVisible(true);
-		
+
+		clear = new JButton();
+		clear.setText("clear");
+		clear.setName("clear");
+		clear.setFocusable(false);
+		clear.addActionListener(frame);
+		clear.setMargin(new Insets(0,0,0,0));
+		clear.setVisible(true);
+
 		buttons.add(run);
+		buttons.add(clear);
 	}
 	
 	public JLabel getL(String t) {
@@ -181,18 +182,17 @@ public class ControlHandler {
 
 		showStepsCheck.setBounds(20, frame.getHeight()-88, 90, 20);
 		diagonalCheck.setBounds(20, frame.getHeight()-64, 90, 20);
-		trigCheck.setBounds(112, frame.getHeight()-63, 50, 20);
 
 		speed.setBounds(178, frame.getHeight()-63, 68, 20);
 
 		run.setBounds(116, frame.getHeight()-88, 52, 22);
+		clear.setBounds(116, frame.getHeight()-64, 52, 22);
 	}
 
 	public void hoverColor() {
 		modeText.setForeground(style.lightText);
 		showStepsCheck.setForeground(style.lightText);
 		diagonalCheck.setForeground(style.lightText);
-		trigCheck.setForeground(style.lightText);
 		speed.setForeground(style.lightText);
 		speedT.setForeground(style.lightText);
 		speedC.setForeground(style.lightText);
@@ -208,7 +208,6 @@ public class ControlHandler {
 		modeText.setForeground(style.darkText);
 		showStepsCheck.setForeground(style.darkText);
 		diagonalCheck.setForeground(style.darkText);
-		trigCheck.setForeground(style.darkText);
 		speed.setForeground(style.darkText);
 		speedT.setForeground(style.darkText);
 		speedC.setForeground(style.darkText);
@@ -223,8 +222,8 @@ public class ControlHandler {
 	public void addAll() {
 		frame.add(showStepsCheck);
 		frame.add(diagonalCheck);
-		frame.add(trigCheck);
 		frame.add(run);
+		frame.add(clear);
 		frame.add(modeText);
 		frame.add(openT);
 		frame.add(openC);

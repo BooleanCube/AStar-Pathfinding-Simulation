@@ -146,7 +146,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 		else ch.getL("speedC").setText("N/A");
 		showSteps = ch.getC("showStepsCheck").isSelected();
 		pathfinding.setDiagonal(ch.getC("diagonalCheck").isSelected());
-		pathfinding.setTrig(ch.getC("trigCheck").isSelected());
 	}
 
 	public void drawInfo(Node current, Graphics g) {
@@ -162,6 +161,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
 	public void MapCalculations(MouseEvent e) {
 		if(!mode.equalsIgnoreCase("Map Creation")) return;
+
 		if(SwingUtilities.isLeftMouseButton(e)) {
 			if(currentKey == 's') {
 				int x = e.getX() % size;
@@ -242,7 +242,7 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 
 	@Override
 	public void keyReleased(KeyEvent e) { currentKey = (char) 0; }
-	void start() {
+	boolean start() {
 		if(startNode != null && endNode != null) {
 			if(!showSteps) pathfinding.start(startNode, endNode);
 			else {
@@ -251,56 +251,58 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 				timer.start();
 			}
 		}
-		else System.out.println("ERROR: Needs start and end points to run."); //fix and make an actual ui forit
+		return false;
 	}
 
 	// Disabled this feature fornow
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent m) {
-//		int rotation = m.getWheelRotation();
-//		double prevSize = size;
-//		int scroll = 3;
-//
-//		if(rotation == -1 && size + scroll < 200) {
-//			size += scroll;
-//		} else if(rotation == 1 && size - scroll > 2) {
-//			size += -scroll;
-//		}
-//		pathfinding.setSize(size);
-//		double ratio = size / prevSize;
-//
-//		if(startNode != null) {
-//			int sX = (int) Math.round(startNode.x * ratio);
-//			int sY = (int) Math.round(startNode.y * ratio);
-//			startNode.setXY(sX, sY);
-//		}
-//
-//		if(endNode != null) {
-//			int eX = (int) Math.round(endNode.x * ratio);
-//			int eY = (int) Math.round(endNode.y * ratio);
-//			endNode.setXY(eX, eY);
-//		}
-//
-//		for(int i = 0; i < pathfinding.getBorderList().size(); i++) {
-//			int newX = (int) Math.round((pathfinding.getBorderList().get(i).x * ratio));
-//			int newY = (int) Math.round((pathfinding.getBorderList().get(i).y * ratio));
-//			pathfinding.getBorderList().get(i).setXY(newX, newY);
-//		}
-//
-//		for(int i = 0; i < pathfinding.getOpenList().size(); i++) {
-//			int newX = (int) Math.round((pathfinding.getOpenList().get(i).x * ratio));
-//			int newY = (int) Math.round((pathfinding.getOpenList().get(i).y * ratio));
-//			pathfinding.getOpenList().get(i).setXY(newX, newY);
-//		}
-//
-//		for(int i = 0; i < pathfinding.getClosedList().size(); i++) {
-//			if(!Node.isEqual(pathfinding.getClosedList().get(i), startNode)) {
-//				int newX = (int) Math.round((pathfinding.getClosedList().get(i).x * ratio));
-//				int newY = (int) Math.round((pathfinding.getClosedList().get(i).y * ratio));
-//				pathfinding.getClosedList().get(i).setXY(newX, newY);
-//			}
-//		}
-//		repaint();
+		if(startNode != null || endNode != null || !pathfinding.getBorderList().isEmpty()) return;
+
+		int rotation = m.getWheelRotation();
+		double prevSize = size;
+		int scroll = 3;
+
+		if(rotation == -1 && size + scroll < 80) {
+			size += scroll;
+		} else if(rotation == 1 && size - scroll > 20) {
+			size += -scroll;
+		}
+		pathfinding.setSize(size);
+		double ratio = size / prevSize;
+
+		if(startNode != null) {
+			int sX = (int) Math.round(startNode.x * ratio);
+			int sY = (int) Math.round(startNode.y * ratio);
+			startNode.setXY(sX, sY);
+		}
+
+		if(endNode != null) {
+			int eX = (int) Math.round(endNode.x * ratio);
+			int eY = (int) Math.round(endNode.y * ratio);
+			endNode.setXY(eX, eY);
+		}
+
+		for(int i = 0; i < pathfinding.getBorderList().size(); i++) {
+			int newX = (int) Math.round((pathfinding.getBorderList().get(i).x * ratio));
+			int newY = (int) Math.round((pathfinding.getBorderList().get(i).y * ratio));
+			pathfinding.getBorderList().get(i).setXY(newX, newY);
+		}
+
+		for(int i = 0; i < pathfinding.getOpenList().size(); i++) {
+			int newX = (int) Math.round((pathfinding.getOpenList().get(i).x * ratio));
+			int newY = (int) Math.round((pathfinding.getOpenList().get(i).y * ratio));
+			pathfinding.getOpenList().get(i).setXY(newX, newY);
+		}
+
+		for(int i = 0; i < pathfinding.getClosedList().size(); i++) {
+			if(!pathfinding.getClosedList().get(i).isEqual(startNode)) {
+				int newX = (int) Math.round((pathfinding.getClosedList().get(i).x * ratio));
+				int newY = (int) Math.round((pathfinding.getClosedList().get(i).y * ratio));
+				pathfinding.getClosedList().get(i).setXY(newX, newY);
+			}
+		}
+		repaint();
 	}
 
 	@Override
@@ -319,22 +321,25 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 		}
 		if(e.getActionCommand() != null) {
 			if(e.getActionCommand().equals("run") && !pathfinding.isRunning()) {
+				if(!start()) return;
 				ch.getB("run").setText("pause");
-				start();
-			}
-			else if(e.getActionCommand().equals("reset")) {
+			} else if(e.getActionCommand().equals("reset")) {
 				ch.getB("run").setText("run");
 				mode = "Map Creation";
 				ch.getL("noPathT").setVisible(false);
 				pathfinding.reset();
-			}
-			else if(e.getActionCommand().equals("pause")) {
+			} else if(e.getActionCommand().equals("pause")) {
 				ch.getB("run").setText("play");
 				timer.stop();
-			}
-			else if(e.getActionCommand().equals("play")) {
+			} else if(e.getActionCommand().equals("play")) {
 				ch.getB("run").setText("pause");
+				if(!showSteps) { pathfinding.start(startNode, endNode); return; }
 				timer.start();
+			} else if(e.getActionCommand().equals("clear")) {
+				if(mode.equalsIgnoreCase("Map Creation")) {
+					startNode = null; endNode = null;
+					pathfinding.getBorderList().clear();
+				}
 			}
 		}
 		repaint();
