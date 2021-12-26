@@ -27,15 +27,15 @@ To delete nodes:
 My algorithm supports both diagonal and non diagonal pathfinding. <br>
 Simply check the "diagonal" box at the bottom left of the screen.
 
-### Variable Speed
-You may change the speed of the visualization during runtime. (By default, `speed` is 50%.) <br>
+### Speed
+You may change the speed of the simulation during runtime. (By default, `speed` is 50%.) <br>
 Notice: speed only works when showSteps is true. <br>
 if `showSteps` is false, well, that leads into the next section.. 
 
 ### Show Steps or Timed Efficiency
 You may choose to view a step-by-step process of the algorithm by selecting `showSteps` box at the bottom left. 
   - If `showSteps` is false, the algorithm will skip visuals until the end, and process as fast as possible.
-This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows `showSteps` as false, where it times the algorithm and outputs `Completed in 4ms` at the bottom left. <br>
+This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows `showSteps` as false, where it times the algorithm and outputs `Completed in 7ms` at the bottom left. <br>
 <img src="https://user-images.githubusercontent.com/47650058/147399062-76e9eb05-939d-460e-9083-1e9c2a1b9fa9.png" width="500" />
 
 ### Zoom
@@ -43,6 +43,6 @@ You may scroll up and down to zoom in and out. If zoomed in far enough, you will
 <img src="https://user-images.githubusercontent.com/47650058/147398876-e92b037e-9b70-4d35-b46a-3fc413baf548.png" width="500" />
 
 ## WARNING!
-You can create unordinary and complex maps and the simulation will run fine but be wary that sometimes, if the path has already searched many nodes, the program might eventually run into a stackoverflow error. <br>
+You can create unordinary and complex maps and the simulation will run fine but be wary that sometimes, if the path has already searched many nodes, the program might eventually run into a stackoverflow error. (Should be fixed for the most part now) <br>
 
 *a project fixed by BooleanCube :]*
