@@ -4,6 +4,12 @@ This is my first attempt at A* pathfinding. I made this simulation to experiment
 
 ![sus](https://user-images.githubusercontent.com/47650058/147399417-daed2f3a-5933-4c36-b3df-f2c84ea024cf.gif)
 
+## Download Instructions
+1) Go to the [Releases Page](https://github.com/BooleanCube/AStar-Pathfinding-Simulation/releases)
+2) Download the AStarPathfinding.jar from the latest release
+3) To run the Jar file simply open up your terminal and type `java -jar path/to/jar/AStarPathfinding.jar` (`path/to/jar/` is usually `Downloads/` but it depends on where you stored the file)
+4) After you run that command the Simulation Window should pop up and you can play around with the simulation. If it doesn't work, feel free to post an issue with the error at hand.
+
 ## Basic Controls
 
 ### Map Creation
@@ -29,15 +35,14 @@ if `showSteps` is false, well, that leads into the next section..
 ### Show Steps or Timed Efficiency
 You may choose to view a step-by-step process of the algorithm by selecting `showSteps` box at the bottom left. 
   - If `showSteps` is false, the algorithm will skip visuals until the end, and process as fast as possible.
-This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows `showSteps` as false, where it times the algorithm and outputs `Completed in 4ms` at the bottom left.
+This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows `showSteps` as false, where it times the algorithm and outputs `Completed in 4ms` at the bottom left. <br>
 <img src="https://user-images.githubusercontent.com/47650058/147399062-76e9eb05-939d-460e-9083-1e9c2a1b9fa9.png" width="500" />
 
 ### Zoom
-You may scroll up and down to zoom in and out. If zoomed in far enough, you will be able to see details like the `g cost`, `h cost` and `f cost` for each node that is open and closed. The Zoom feature can only be used when the board is empty so if you want to resize the grid you would have to first clear the board.
+You may scroll up and down to zoom in and out. If zoomed in far enough, you will be able to see details like the `g cost`, `h cost` and `f cost` for each node that is open and closed. The Zoom feature can only be used when the board is empty so if you want to resize the grid you would have to first clear the board. <br>
 <img src="https://user-images.githubusercontent.com/47650058/147398876-e92b037e-9b70-4d35-b46a-3fc413baf548.png" width="500" />
 
 ## WARNING!
-
 You can create unordinary and complex maps and the simulation will run fine but be wary that sometimes, if the path has already searched many nodes, the program might eventually run into a stackoverflow error. <br>
 
 *a project fixed by BooleanCube :]*
