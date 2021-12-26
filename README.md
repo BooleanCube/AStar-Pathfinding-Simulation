@@ -42,7 +42,6 @@ This is useful for when you want to analyze the efficiency of my algorithm in di
 You can create unordinary and complex maps and the simulation will run fine but be wary that sometimes, if the path has already searched many nodes, the program might eventually run into a stackoverflow error. <br>
 
 ## TODO
-- [ ] Add a clear feature (clears every object on the screen)
 - [ ] make a separate repo for sorting later ig /shrug
 - [ ] Fix scrolling to resize grid
 
