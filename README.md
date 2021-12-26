@@ -44,7 +44,6 @@ You can create unordinary and complex maps and the simulation will run fine but 
 ## TODO
 - [ ] Fix going through walls bug
 - [ ] Add a clear feature (clears every object on the screen)
-- [ ] change start and stop to start and pause and create a separate reset feature
 - [ ] while in running mode, disable editing and map creation.
 - [ ] optimize sorting
 - [ ] general optimization overall
