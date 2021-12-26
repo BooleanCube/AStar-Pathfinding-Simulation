@@ -43,6 +43,5 @@ You can create unordinary and complex maps and the simulation will run fine but 
 
 ## TODO
 - [ ] make a separate repo for sorting later ig /shrug
-- [ ] Fix scrolling to resize grid
 
 *a project fixed by BooleanCube :]*
