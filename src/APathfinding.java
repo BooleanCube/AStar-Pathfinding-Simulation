@@ -8,17 +8,18 @@ public class APathfinding {
 	private Frame frame;
 	private Node startNode, endNode, par;
 	private boolean diagonal, running, noPath, complete, trig;
-	private ArrayList<Node> borders, open, closed, path;
-	private Sort sort = new Sort();
+	private final ArrayList<Node> borders, open, closed, path;
 
 	public APathfinding(int size) {
 		this.size = size;
+
 		diagonalMoveCost = (int) (Math.sqrt(2 * (Math.pow(size, 2))));
 		kValue = Math.PI / 2;
 		diagonal = true;
 		trig = false;
 		running = false;
 		complete = false;
+
 		borders = new ArrayList<Node>();
 		open = new ArrayList<Node>();
 		closed = new ArrayList<Node>();
@@ -36,10 +37,10 @@ public class APathfinding {
 		running = false;
 		complete = false;
 
-		borders = new ArrayList<Node>();
-		open = new ArrayList<Node>();
-		closed = new ArrayList<Node>();
-		path = new ArrayList<Node>();
+		borders = new ArrayList<>();
+		open = new ArrayList<>();
+		closed = new ArrayList<>();
+		path = new ArrayList<>();
 	}
 
 	public APathfinding(Frame frame, int size, Node start, Node end) {
@@ -66,7 +67,6 @@ public class APathfinding {
 		startNode.g = 0;
 		endNode = e;
 
-		// Adding the starting node to the closed list
 		addClosed(startNode);
 
 		long startTime = System.currentTimeMillis();
@@ -76,7 +76,6 @@ public class APathfinding {
 		complete = true;
 		long endTime = System.currentTimeMillis();
 		runTime = endTime - startTime;
-		System.out.println("Completed: " + runTime + "ms");
 	}
 	
 	public void setup(Node s, Node e) {
@@ -86,7 +85,6 @@ public class APathfinding {
 		par = startNode;
 		endNode = e;
 
-		// Adding the starting node to the closed list
 		addClosed(startNode);
 	}
 
@@ -146,27 +144,23 @@ public class APathfinding {
 
 	public void findPath(Node parent) {
 		Node openNode = null;
-		if (diagonal) {
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					if (i == 1 && j == 1) continue;
+		if(diagonal) {
+			for(int i = 0; i < 3; i++) {
+				for(int j = 0; j < 3; j++) {
+					if(i == 1 && j == 1) continue;
 					int possibleX = (parent.x - size) + (size * i);
 					int possibleY = (parent.y - size) + (size * j);
 					int crossBorderX = parent.x + (possibleX - parent.x);
 					int crossBorderY = parent.y + (possibleY - parent.y);
-					if (searchBorder(crossBorderX, parent.y) != -1 | searchBorder(parent.x, crossBorderY) != -1 && ((j == 0 | j == 2) && i != 1)) continue;
+					if(searchBorder(crossBorderX, parent.y) != -1 | searchBorder(parent.x, crossBorderY) != -1 && ((j == 0 | j == 2) && i != 1)) continue;
 					calculateNodeValues(possibleX, possibleY, openNode, parent);
 				}
 			}
 		} 
-		else if (!trig) {
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					if((i == 0 && j == 0) || (i == 0 && j == 2) || 
-						(i == 1 && j == 1) || (i == 2 && j == 0) ||
-						(i == 2 && j == 2)) {
-						continue;
-					}
+		else if(!trig) {
+			for(int i = 0; i < 3; i++) {
+				for(int j = 0; j < 3; j++) {
+					if((i == 0 && j == 0) || (i == 0 && j == 2) || (i == 1 && j == 1) || (i == 2 && j == 0) || (i == 2 && j == 2)) continue;
 					int possibleX = (parent.x - size) + (size * i);
 					int possibleY = (parent.y - size) + (size * j);
 					calculateNodeValues(possibleX, possibleY, openNode, parent);
@@ -174,21 +168,21 @@ public class APathfinding {
 			}
 		}
 		else {
-			for (int i = 0; i < 4; i++) {
+			for(int i = 0; i < 4; i++) {
 				int possibleX = (int) Math.round(parent.x + (-size * Math.cos(kValue * i)));
 				int possibleY = (int) Math.round(parent.y + (-size * Math.sin(kValue * i)));
 				calculateNodeValues(possibleX, possibleY, openNode, parent);
 			}
 		}
 		parent = lowestFCost();
-		if (parent == null) {
+		if(parent == null) {
 			System.out.println("END> NO PATH");
 			noPath = true;
 			running = false;
 			frame.repaint();
 			return;
 		}
-		if (Node.isEqual(parent, endNode)) {
+		if(parent.isEqual(endNode)) {
 			endNode.parent = parent.parent;
 			connectPath();
 			running = false;
@@ -198,21 +192,22 @@ public class APathfinding {
 		}
 		removeOpen(parent);
 		addClosed(parent);
-		if (diagonal) {
-			for (int i = 0; i < 3; i++) {
-				for (int j = 0; j < 3; j++) {
-					if (i == 1 && j == 1) continue;
+		if(diagonal) {
+			for(int i = 0; i < 3; i++) {
+				for(int j = 0; j < 3; j++) {
+					if(i == 1 && j == 1) continue;
 					int possibleX = (parent.x - size) + (size * i);
 					int possibleY = (parent.y - size) + (size * j);
 					Node openCheck = getOpenNode(possibleX, possibleY);
-					if (openCheck != null) {
+					if(openCheck != null) {
 						int distanceX = parent.x - openCheck.x;
 						int distanceY = parent.y - openCheck.y;
 						int newG = parent.g;
-						if (distanceX != 0 && distanceY != 0) newG += diagonalMoveCost;
+						if(distanceX != 0 && distanceY != 0) newG += diagonalMoveCost;
 						else newG += size;
-						if (newG < openCheck.g) {
+						if(newG < openCheck.g) {
 							int s = searchOpen(possibleX, possibleY);
+							if(searchBorder(possibleX, parent.y) != -1 | searchBorder(parent.x, possibleY) != -1 && ((j == 0 | j == 2) && i != 1)) continue;
 							open.get(s).parent = parent;
 							open.get(s).g = newG;
 							open.get(s).f = open.get(s).g + open.get(s).h;
@@ -226,33 +221,32 @@ public class APathfinding {
 	}
 
 	public void calculateNodeValues(int possibleX, int possibleY, Node openNode, Node parent) {
-		if (possibleX < 0 | possibleY < 0 | possibleX >= frame.getWidth() | possibleY >= frame.getHeight()) return;
-		if (searchBorder(possibleX, possibleY) != -1 | searchClosed(possibleX, possibleY) != -1 | searchOpen(possibleX, possibleY) != -1) return;
+		if(possibleX < 0 | possibleY < 0 | possibleX >= frame.getWidth() | possibleY >= frame.getHeight()) return;
+		if(searchBorder(possibleX, possibleY) != -1 | searchClosed(possibleX, possibleY) != -1 | searchOpen(possibleX, possibleY) != -1) return;
 		openNode = new Node(possibleX, possibleY);
 		openNode.parent = parent;
 		int GxMoveCost = openNode.x - parent.x;
 		int GyMoveCost = openNode.y - parent.y;
 		int gCost = parent.g;
-		if (GxMoveCost != 0 && GyMoveCost != 0) gCost += diagonalMoveCost;
+		if(GxMoveCost != 0 && GyMoveCost != 0) gCost += diagonalMoveCost;
 		else gCost += size;
 		openNode.g = gCost;
 		int HxDiff = Math.abs(endNode.x - openNode.x);
 		int HyDiff = Math.abs(endNode.y - openNode.y);
 		int hCost = HxDiff + HyDiff;
 		openNode.h = hCost;
-		int fCost = gCost + hCost;
-		openNode.f = fCost;
+		openNode.f = gCost + hCost;
 		addOpen(openNode);
 	}
 
 	public void connectPath() {
-		if (path.size() == 0) {
+		if(path.size() == 0) {
 			Node parentNode = endNode.parent;
-			while (!Node.isEqual(parentNode, startNode)) {
+			while(!parentNode.isEqual(startNode)) {
 				addPath(parentNode);
-				for (int i = 0; i < getClosedList().size(); i++) {
+				for(int i=0; i<getClosedList().size(); i++) {
 					Node current = getClosedList().get(i);
-					if (Node.isEqual(current, parentNode)) {
+					if(current.isEqual(parentNode)) {
 						parentNode = current.parent;
 						break;
 					}
@@ -263,22 +257,22 @@ public class APathfinding {
 	}
 
 	public void addBorder(Node node) {
-		if (borders.size() == 0) borders.add(node);
-		else if (!checkBorderDuplicate(node)) borders.add(node);
+		if(borders.size() == 0) borders.add(node);
+		else if(!checkBorderDuplicate(node)) borders.add(node);
 	}
 
 	public void addOpen(Node node) {
-		if (open.size() == 0) open.add(node);
-		else if (!checkOpenDuplicate(node)) open.add(node);
+		if(open.size() == 0) open.add(node);
+		else if(!checkOpenDuplicate(node)) open.add(node);
 	}
 
 	public void addClosed(Node node) {
-		if (closed.size() == 0) closed.add(node);
-		else if (!checkClosedDuplicate(node)) closed.add(node);
+		if(closed.size() == 0) closed.add(node);
+		else if(!checkClosedDuplicate(node)) closed.add(node);
 	}
 
 	public void addPath(Node node) {
-		if (path.size() == 0) path.add(node);
+		if(path.size() == 0) path.add(node);
 		else path.add(node);
 	}
 
@@ -295,7 +289,7 @@ public class APathfinding {
 	}
 
 	public void removeOpen(Node node) {
-		for (int i = 0; i < open.size(); i++) if (node.x == open.get(i).x && node.y == open.get(i).y) open.remove(i);
+		for(int i = 0; i < open.size(); i++) if(node.x == open.get(i).x && node.y == open.get(i).y) open.remove(i);
 	}
 
 	public void removeClosed(int location) {
@@ -303,56 +297,45 @@ public class APathfinding {
 	}
 
 	public boolean checkBorderDuplicate(Node node) {
-		for (int i = 0; i < borders.size(); i++) if (node.x == borders.get(i).x && node.y == borders.get(i).y) return true;
+		for(Node border : borders) if(node.x == border.x && node.y == border.y) return true;
 		return false;
 	}
 
 	public boolean checkOpenDuplicate(Node node) {
-		for (int i = 0; i < open.size(); i++) if (node.x == open.get(i).x && node.y == open.get(i).y) return true;
+		for(Node value : open) if(node.x == value.x && node.y == value.y) return true;
 		return false;
 	}
 
 	public boolean checkClosedDuplicate(Node node) {
-		for (int i = 0; i < closed.size(); i++) if (node.x == closed.get(i).x && node.y == closed.get(i).y) return true;
+		for(Node value : closed) if(node.x == value.x && node.y == value.y) return true;
 		return false;
 	}
 
 	public int searchBorder(int xSearch, int ySearch) {
-		int location = -1;
-		for (int i = 0; i < borders.size(); i++) {
-			if (borders.get(i).x == xSearch && borders.get(i).y == ySearch) {
-				location = i;
-				break;
-			}
-		}
-		return location;
+		for(int i=0; i<borders.size(); i++) if(borders.get(i).x == xSearch && borders.get(i).y == ySearch) return i;
+		return -1;
 	}
 
 	public int searchClosed(int xSearch, int ySearch) {
-		int location = -1;
-		for (int i = 0; i < closed.size(); i++) {
-			if (closed.get(i).x == xSearch && closed.get(i).y == ySearch) {
-				location = i;
-				break;
-			}
-		}
-		return location;
+		for(int i=0; i<closed.size(); i++) if(closed.get(i).x == xSearch && closed.get(i).y == ySearch) return i;
+		return -1;
 	}
 
 	public int searchOpen(int xSearch, int ySearch) {
-		int location = -1;
-		for (int i = 0; i < open.size(); i++) {
-			if (open.get(i).x == xSearch && open.get(i).y == ySearch) {
-				location = i;
-				break;
+		for(int i=0; i<open.size(); i++) {
+			if(open.get(i).x == xSearch && open.get(i).y == ySearch) {
+				return i;
 			}
 		}
-		return location;
+		return -1;
 	}
 
 	public Node lowestFCost() {
-		if (open.size() > 0) {
-			sort.bubbleSort(open);
+		if(open.size() > 0) {
+			// Sorts are listed according to time complexity (from fastest to slowest runtime)
+			Sort.fastSort(open);
+			//Sort.quickSort(open, 0, open.size()-1);
+			//Sort.bubbleSort(open);
 			return open.get(0);
 		}
 		return null;
@@ -400,35 +383,8 @@ public class APathfinding {
 	}
 
 	public Node getOpenNode(int x, int y) {
-		for (int i = 0; i < open.size(); i++) {
-			if (open.get(i).x == x && open.get(i).y == y) {
-				return open.get(i);
-			}
-		}
+		for(Node node : open) if(node.x == x && node.y == y) return node;
 		return null;
 	}
 
-	public void printBorderList() {
-		for (int i = 0; i < borders.size(); i++) {
-			System.out.print(borders.get(i).x + ", " + borders.get(i).y);
-			System.out.println();
-		}
-		System.out.println("===============");
-	}
-
-	public void printOpenList() {
-		for (int i = 0; i < open.size(); i++) {
-			System.out.print(open.get(i).x + ", " + open.get(i).y);
-			System.out.println();
-		}
-		System.out.println("===============");
-	}
-
-	public void printPathList() {
-		for (int i = 0; i < path.size(); i++) {
-			System.out.print(i + ": " + path.get(i).x + ", " + path.get(i).y + ": " + path.get(i).f);
-			System.out.println();
-		}
-		System.out.println("===============");
-	}
 }

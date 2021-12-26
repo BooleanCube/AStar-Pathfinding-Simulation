@@ -7,35 +7,27 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
-/* This class manages all components used on the main
- * control panel (bottom left) Meant to remove some
- * excessive graphics code from "Frame.java" class
- * by Devon Crawford
- */
 public class ControlHandler {
-	private Frame frame;
-	private JLabel modeText, speedT, speedC, openT, 
+	private final Frame frame;
+	private final JLabel modeText, speedT, speedC, openT,
 	closedT, pathT, openC, closedC, pathC, noPathT;
-	private JCheckBox showStepsCheck, diagonalCheck, trigCheck;
-	private JSlider speed;
-	private JButton run;
-	private ArrayList<JLabel> labels;
-	private ArrayList<JCheckBox> checks;
-	private ArrayList<JSlider> sliders;
-	private ArrayList<JButton> buttons;
+	private final JCheckBox showStepsCheck, diagonalCheck, trigCheck;
+	private final JSlider speed;
+	private final JButton run;
+	private final ArrayList<JLabel> labels;
+	private final ArrayList<JCheckBox> checks;
+	private final ArrayList<JSlider> sliders;
+	private final ArrayList<JButton> buttons;
 	Dimension npD;
 	
 	public ControlHandler(Frame frame) {
 		this.frame = frame;
-		labels = new ArrayList<JLabel>();
-		checks = new ArrayList<JCheckBox>();
-		sliders = new ArrayList<JSlider>();
-		buttons = new ArrayList<JButton>();
+		labels = new ArrayList<>();
+		checks = new ArrayList<>();
+		sliders = new ArrayList<>();
+		buttons = new ArrayList<>();
 		
-		// Set up JLabels
 		modeText = new JLabel("Mode: ");
 		modeText.setName("modeText");
 		modeText.setFont(style.bigText);
@@ -88,7 +80,6 @@ public class ControlHandler {
 		noPathT.setFont(style.REALBIGText);
 		npD = noPathT.getPreferredSize();
 		
-		// Add JLabels to list
 		labels.add(modeText);
 		labels.add(speedT);
 		labels.add(speedC);
@@ -100,7 +91,6 @@ public class ControlHandler {
 		labels.add(pathC);
 		labels.add(noPathT);
 		
-		// Set up JCheckBoxes
 		showStepsCheck = new JCheckBox();
 		showStepsCheck.setText("showSteps");
 		showStepsCheck.setName("showStepsCheck");
@@ -124,31 +114,24 @@ public class ControlHandler {
 		trigCheck.setFocusable(false);
 		trigCheck.setVisible(true);
 		
-		// Add JCheckboxes to list
 		checks.add(showStepsCheck);
 		checks.add(diagonalCheck);
 		checks.add(trigCheck);
 		
-		// Set up JSliders
 		speed = new JSlider();
 		speed.setName("speed");
 		speed.setOpaque(false);
 		speed.setVisible(true);
 		speed.setFocusable(false);
-		speed.addChangeListener(new ChangeListener() {
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				JSlider source = (JSlider) e.getSource();
-				speed.setValue(source.getValue());
-				frame.setSpeed();
-				frame.repaint();
-			}
+		speed.addChangeListener(e -> {
+			JSlider source = (JSlider) e.getSource();
+			speed.setValue(source.getValue());
+			frame.setSpeed();
+			frame.repaint();
 		});
 		
-		// Add JSliders to list
 		sliders.add(speed);
 		
-		// Set up JButtons
 		run = new JButton();
 		run.setText("run");
 		run.setName("run");
@@ -157,58 +140,34 @@ public class ControlHandler {
 		run.setMargin(new Insets(0,0,0,0));
 		run.setVisible(true);
 		
-		// Add JButtons to list
 		buttons.add(run);
 	}
 	
-	// Gets a specific JLabel by name
 	public JLabel getL(String t) {
-		for(int i = 0; i < labels.size(); i++) {
-			if(labels.get(i).getName().equals(t)) {
-				return labels.get(i);
-			}
-		}
+		for(JLabel label : labels) if(label.getName().equals(t)) return label;
 		return null;
 	}
-	
-	// Gets specific JCheckBox by name
+
 	public JCheckBox getC(String t) {
-		for(int i = 0; i < checks.size(); i++) {
-			if(checks.get(i).getName().equals(t)) {
-				return checks.get(i);
-			}
-		}
+		for(JCheckBox check : checks) if(check.getName().equals(t)) return check;
 		return null;
 	}
-	
-	// Gets specific JCheckBox by name
+
 	public JSlider getS(String t) {
-		for(int i = 0; i < sliders.size(); i++) {
-			if(sliders.get(i).getName().equals(t)) {
-				return sliders.get(i);
-			}
-		}
+		for(JSlider slider : sliders) if(slider.getName().equals(t)) return slider;
 		return null;
 	}
-	
-	// Gets specific JCheckBox by name
+
 	public JButton getB(String t) {
-		for(int i = 0; i < buttons.size(); i++) {
-			if(buttons.get(i).getName().equals(t)) {
-				return buttons.get(i);
-			}
-		}
+		for(JButton button : buttons) if(button.getName().equals(t)) return button;
 		return null;
 	}
 	
 	public void noPathTBounds() {
-		noPathT.setBounds((int)((frame.getWidth()/2)-(npD.getWidth()/2)), 
-				(int)((frame.getHeight()/2)-70), 
-				(int)npD.getWidth(), (int)npD.getHeight());
+		noPathT.setBounds((int)((frame.getWidth()/2)-(npD.getWidth()/2)), (frame.getHeight()/2)-70, (int)npD.getWidth(), (int)npD.getHeight());
 	}
 	
 	public void position() {
-		// Set label bounds
 		speedT.setBounds(180, frame.getHeight()-88, 60, 20);
 		speedC.setBounds(224, frame.getHeight()-88, 60, 20);
 		openT.setBounds(254, frame.getHeight()-92, 60, 20);
@@ -219,21 +178,17 @@ public class ControlHandler {
 		pathC.setBounds(300, frame.getHeight()-60, 60, 20);
 		Dimension size = modeText.getPreferredSize();
 		modeText.setBounds(20, frame.getHeight() - 39, size.width, size.height);
-		
-		// Set check box bounds
+
 		showStepsCheck.setBounds(20, frame.getHeight()-88, 90, 20);
 		diagonalCheck.setBounds(20, frame.getHeight()-64, 90, 20);
 		trigCheck.setBounds(112, frame.getHeight()-63, 50, 20);
-		
-		// Set slider bounds
+
 		speed.setBounds(178, frame.getHeight()-63, 68, 20);
-		
-		// Set button bounds
+
 		run.setBounds(116, frame.getHeight()-88, 52, 22);
 	}
-	
-	// Sets text of JLabels to lightText
-	public void hoverColour() {
+
+	public void hoverColor() {
 		modeText.setForeground(style.lightText);
 		showStepsCheck.setForeground(style.lightText);
 		diagonalCheck.setForeground(style.lightText);
@@ -248,9 +203,8 @@ public class ControlHandler {
 		pathT.setForeground(style.lightText);
 		pathC.setForeground(style.lightText);
 	}
-	
-	// Sets text of JLabels to darkText
-	public void nonHoverColour() {
+
+	public void nonHoverColor() {
 		modeText.setForeground(style.darkText);
 		showStepsCheck.setForeground(style.darkText);
 		diagonalCheck.setForeground(style.darkText);
@@ -265,8 +219,7 @@ public class ControlHandler {
 		pathT.setForeground(style.darkText);
 		pathC.setForeground(style.darkText);
 	}
-	
-	// Adds all components to frame
+
 	public void addAll() {
 		frame.add(showStepsCheck);
 		frame.add(diagonalCheck);
