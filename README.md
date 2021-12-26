@@ -2,7 +2,7 @@
 
 This is my first attempt at A* pathfinding. I made this simulation to experiment with interesting ways of pathfinding for game development. The Simulation is very user-friendly and you can configure all major features of my algorithm through the UI to your liking. This simulation is heavily influenced by the A* Pathfinding Visualization written by Devon Crawford, but I just optimized it a bit more and added some new handy features.
 
-![complicated-drawings](https://cloud.githubusercontent.com/assets/25334129/22450232/2b790d14-e733-11e6-8a91-4b4cba372f9b.gif)
+![sus](https://user-images.githubusercontent.com/47650058/147399417-daed2f3a-5933-4c36-b3df-f2c84ea024cf.gif)
 
 ## Basic Controls
 
@@ -30,18 +30,14 @@ if `showSteps` is false, well, that leads into the next section..
 You may choose to view a step-by-step process of the algorithm by selecting `showSteps` box at the bottom left. 
   - If `showSteps` is false, the algorithm will skip visuals until the end, and process as fast as possible.
 This is useful for when you want to analyze the efficiency of my algorithm in different coniditons. The example below shows `showSteps` as false, where it times the algorithm and outputs `Completed in 4ms` at the bottom left.
-![runtime](https://cloud.githubusercontent.com/assets/25334129/22450236/2f7d1d9c-e733-11e6-87ea-60bc0ecac146.gif)
+<img src="https://user-images.githubusercontent.com/47650058/147399062-76e9eb05-939d-460e-9083-1e9c2a1b9fa9.png" width="500" />
 
 ### Zoom
-(Temporarily removed zooming feature for now)
-
-~~You can (kind of) zoom in and out. I wouldn't really advise it. It does not zoom into your mouse, only towards the top left corner, and making the map too big will crash the program. This needs some work. However, If you zoom in far enough you can view each nodes information. The top left is the "F cost", bottom left is "G cost" and bottom right is "H cost". I will work on properly implementing a zoom feature soon.~~
+You may scroll up and down to zoom in and out. If zoomed in far enough, you will be able to see details like the `g cost`, `h cost` and `f cost` for each node that is open and closed. The Zoom feature can only be used when the board is empty so if you want to resize the grid you would have to first clear the board.
+<img src="https://user-images.githubusercontent.com/47650058/147398876-e92b037e-9b70-4d35-b46a-3fc413baf548.png" width="500" />
 
 ## WARNING!
 
 You can create unordinary and complex maps and the simulation will run fine but be wary that sometimes, if the path has already searched many nodes, the program might eventually run into a stackoverflow error. <br>
-
-## TODO
-- [ ] make a separate repo for sorting later ig /shrug
 
 *a project fixed by BooleanCube :]*
