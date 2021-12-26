@@ -44,7 +44,6 @@ You can create unordinary and complex maps and the simulation will run fine but 
 ## TODO
 - [ ] Add a clear feature (clears every object on the screen)
 - [ ] while in running mode, disable editing and map creation.
-- [ ] bug fixing from devoncrawfords issue page
 - [ ] make a separate repo for sorting later ig /shrug
 - [ ] Fix scrolling to resize grid
 
