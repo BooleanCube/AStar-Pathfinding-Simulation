@@ -254,7 +254,6 @@ public class Frame extends JPanel implements ActionListener, MouseListener, Mous
 		return false;
 	}
 
-	// Disabled this feature fornow
 	@Override
 	public void mouseWheelMoved(MouseWheelEvent m) {
 		if(startNode != null || endNode != null || !pathfinding.getBorderList().isEmpty()) return;
